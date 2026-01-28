@@ -32,6 +32,10 @@ class MemoryBlock
         {
             return start;
         }
+        std::byte* getEnd()
+        {
+            return end;
+        }
         //Allocator will be in charge of MemoryBlock allocation. That is that we will use the allocator to return objects of Memory blocks
 
         MemoryBlock(size_t sze, std::byte* strt, std::byte* en)
@@ -44,7 +48,7 @@ class MemoryBlock
 
         std::byte getByteAt(size_t i)
         {
-            if(start + i > end)
+            if(i >= size)
             {
                 return (std::byte)17;
             }
@@ -53,7 +57,7 @@ class MemoryBlock
 
         int setByteAt(size_t i, std::byte n)
         {
-            if(start + i > end)
+            if(i >= size)
             {
                 return -1;
             }
@@ -61,6 +65,8 @@ class MemoryBlock
             return 0;
 
         }
+        ~MemoryBlock() {}
+        
     //Data type + data size of type
     //number of types
 

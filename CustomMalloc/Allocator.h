@@ -1,5 +1,6 @@
 #pragma once
 #include <stdexcept>
+#include <cstring>
 
 #include "MemoryBlock.h"
 
@@ -17,7 +18,7 @@ class Allocator{
     public:
         Allocator(size_t size)
         {
-            memStart = new std::byte[size];
+            memStart = new std::byte[size]{};
             numBytes = size;
 
             front = memStart;
@@ -31,10 +32,23 @@ class Allocator{
             }
 
             MemoryBlock newBlock = MemoryBlock(sizeOfBlock, front, front+sizeOfBlock);
+            memset(front,0, sizeOfBlock);
             front += sizeOfBlock;
             amountAllocated += sizeOfBlock;
 
             return newBlock;
+        }
+        void freeBlock(MemoryBlock toFree)
+        {
+            if(front == toFree.getEnd())
+                front = toFree.getStart();
+            else
+                std::cout << "Can only free most recently allocated block\n";
+            return; 
+        }
+        ~Allocator()
+        {
+            delete[] memStart;
         }
 
     
