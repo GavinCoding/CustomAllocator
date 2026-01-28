@@ -4,30 +4,6 @@
 #include "Allocator.h"
 
 
-Allocator::Allocator(size_t size)
-    :memStart(new std::byte[size]),
-    numBytes(size),
-    front (memStart),
-    amountAllocated(0)
-{}
-MemoryBlock Allocator::requestMemory(size_t sizeOfBlock)
-{
-    //Check if we have enough memory left to allocate sizeOfBlock amount of mem
-    if(amountAllocated + sizeOfBlock > numBytes)
-    {
-        throw std::invalid_argument("size of requested memory large than memory available");
-    }
-
-    MemoryBlock newBlock = MemoryBlock(sizeOfBlock, front, front+sizeOfBlock);
-    front += sizeOfBlock;
-    amountAllocated += sizeOfBlock;
-
-    return newBlock;
-}
-Allocator::~Allocator()
-{
-    delete[] memStart;
-}
 
 int main()
 {
