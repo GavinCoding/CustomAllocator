@@ -8,8 +8,8 @@ int main()
 
     try {
         // Allocate first block
-        MemoryBlock blockA = myAllocator.requestMemory(100);
-        MemoryBlock blockB = myAllocator.requestMemory(50);
+        MemoryBlock blockA = myAllocator.requestMemory(100,4);
+        MemoryBlock blockB = myAllocator.requestMemory(50,4);
 
         // Write some data
         for (size_t i = 0; i < blockA.getSize(); ++i)
@@ -39,7 +39,7 @@ int main()
         myAllocator.freeBlock(blockA);
 
         // Allocate another block to test reuse after free
-        MemoryBlock blockC = myAllocator.requestMemory(50);
+        MemoryBlock blockC = myAllocator.requestMemory(50,4);
         std::cout << "Allocated block C of size " << blockC.getSize() << "\n";
 
         // Write to blockC to verify memory is zeroed
